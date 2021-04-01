@@ -91,7 +91,7 @@
                                             <a href="#" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                            <a href="{{ route('admin.logout') }}" class="btn btn-default btn-flat">Sign out</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -110,9 +110,7 @@
                         <li class="header">Survey</li>
                         
                         
-                        <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Hiển thị khảo sát</span></a></li>
-                        
-                        <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Tạo mới khảo sát</span></a></li>
+                        <li><a href="{{ route('survey.index') }}"><i class="fa fa-book"></i> <span>Hiển thị khảo sát</span></a></li>
                         <li class="header">Data</li>
                         <li class="treeview">
                             <a href="#">

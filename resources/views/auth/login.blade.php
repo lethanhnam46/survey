@@ -1,63 +1,49 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Log in</title>
-        <!-- Tell the browser to be responsive to screen width -->
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <!-- Bootstrap 3.3.7 -->
-        <link rel="stylesheet" href="{{ asset('admin/bower_components/bootstrap/dist/css/bootstrap.min.css') }}">
-        <!-- Font Awesome -->
-        <link rel="stylesheet" href="{{ asset('admin/bower_components/font-awesome/css/font-awesome.min.css') }}">
-        <!-- Ionicons -->
-        <link rel="stylesheet" href="{{ asset('admin/bower_components/Ionicons/css/ionicons.min.css') }}">
-        <!-- Theme style -->
-        <link rel="stylesheet" href="{{ asset('admin/dist/css/AdminLTE.min.css') }}">
-        <!-- iCheck -->
-        <link rel="stylesheet" href="{{ asset('admin/plugins/iCheck/square/blue.css') }}">
-        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-        <!-- Google Font -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    </head>
-    <body class="hold-transition login-page">
-        <div class="login-box">
-            <div class="login-logo">
-                <a href="/">Login Hệ Thống Admin</a>
-            </div>
-            <!-- /.login-logo -->
-            <div class="login-box-body">
-                <p class="login-box-msg">Sign in to start your session</p>
-                <form action="" method="post">
-                    @csrf
-                    <div class="form-group has-feedback">
-                        <input type="email" class="form-control" name="email" placeholder="Email">
-                        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                    </div>
-                    <div class="form-group has-feedback">
-                        <input type="password" name="password" class="form-control" placeholder="Password">
-                        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                    </div>
-                    <div class="row">
-                        <!-- /.col -->
-                        <div class="col-xs-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                </form>
-            </div>
-            <!-- /.login-box-body -->
+@extends('layouts.app_master_frontend')
+@section('css')
+    <style>
+        <?php $style = file_get_contents('css/auth.min.css');echo $style;?>
+    </style>
+@stop
+@section('content')
+    <div class="container">
+        <div class="breadcrumb">
+            <ul>
+                <li itemscope="" >
+                    <a itemprop="url" href="/" title="Home"><span itemprop="title">Trang chủ</span></a>
+                </li>
+                <li itemscope="" >
+                    <a itemprop="url" href="#" title="Đồng hồ chính hãng"><span itemprop="title">Account</span></a>
+                </li>
+
+                <li itemscope="">
+                    <a itemprop="url" href="#" title="Đồng hồ Diamond D"><span itemprop="title">Đăng nhập</span></a>
+                </li>
+
+            </ul>
         </div>
-        <!-- /.login-box -->
-        <!-- jQuery 3 -->
-        <script src="{{ asset('admin/bower_components/jquery/dist/jquery.min.js') }}"></script>
-        <!-- Bootstrap 3.3.7 -->
-        <script src="{{ asset('admin/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-    </body>
-</html>
+        <div class="auth" style="background: white;">
+            <form class="from_cart_register" action="" method="post" style="width: 500px;margin:0 auto;padding: 30px 0">
+                @csrf
+                <div class="form-group">
+                    <label for="name">Email <span class="cRed">(*)</span></label>
+                    <input name="email" id="name" type="email" class="form-control" placeholder="nguyenvana@gmail.com">
+                    @if ($errors->first('email'))
+                        <span class="text-danger">{{ $errors->first('email') }}</span>
+                    @endif
+                </div>
+                <div class="form-group">
+                    <label for="phone">Điện thoại <span class="cRed">(*)</span></label>
+                    <input name="password" id="phone" type="password" placeholder="********" class="form-control">
+                    @if ($errors->first('password'))
+                        <span class="text-danger">{{ $errors->first('password') }}</span>
+                    @endif
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-purple btn-xs">Đăng nhập</button>
+                    <a href="{{ route('get.login.social',['social' => 'google']) }}">Google</a><br>
+                    <a href="{{ route('get.email_reset_password') }}">Quên mật khẩu</a>
+                </div>
+            </form>
+        </div>
+    </div>
+@endsection
