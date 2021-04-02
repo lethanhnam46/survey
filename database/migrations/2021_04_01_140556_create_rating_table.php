@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSurveyResultTable extends Migration
+class CreateRatingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,13 @@ class CreateSurveyResultTable extends Migration
      */
     public function up()
     {
-        Schema::create('survey_result', function (Blueprint $table) {
+        Schema::create('rating', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->tinyInteger('level');
+            $table->bigInteger('properties_id')->unsigned();
+            $table->integer('rating'); 
             $table->timestamps();
+
+            $table->foreign('properties_id')->references('id')->on('properties');
         });
     }
 
@@ -27,6 +30,6 @@ class CreateSurveyResultTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('survey_result');
+        Schema::dropIfExists('rating');
     }
 }

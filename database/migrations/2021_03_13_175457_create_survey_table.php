@@ -15,12 +15,15 @@ class CreateSurveyTable extends Migration
     {
         Schema::create('survey', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('user_id')->unsigned();
             $table->string('survey_name');
             $table->tinyInteger('del_flag')->default(1);
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->string('note');
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
