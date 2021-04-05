@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePropertiesTable extends Migration
+class CreatePrototypesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreatePropertiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('properties', function (Blueprint $table) {
+        Schema::create('prototypes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('properties_name');
-            $table->bigInteger('prototype_id')->unsigned();
+            $table->string('prototype_name');
             $table->tinyInteger('del_flag')->default(0);
-
-            $table->foreign('prototype_id')->references('id')->on('prototype');
+            $table->timestamps();
         });
     }
 
@@ -30,6 +28,6 @@ class CreatePropertiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('properties');
+        Schema::dropIfExists('prototypes');
     }
 }

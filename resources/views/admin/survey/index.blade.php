@@ -48,7 +48,10 @@
                                             @endif
                                         </td>
                                         <td> {{ $survey->note }} </td>
-                                        <td> <a href=""> Xem</a> </td>
+                                        <td> 
+                                            <a href=""> Xem </a> 
+                                            <a href=""> Chỉnh sửa </a> 
+                                        </td>
                                     </tr>
                                     @endforeach
                                 @endif

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -35,27 +36,24 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest', ['except' => 'logout']);
     }
 
-    public function getLoginAdmin()
+    /**
+     * Logout trait
+     *
+     * @author Yugo <dedy.yugo.purwanto@gmail.com>
+     * @param  Request $request
+     * @return void         
+     */
+    protected function logout(Request $request)
     {
-        return view('admin.auth.login');
-    }
+        $this->guard()->logout();
 
-    public function postLoginAdmin(Request $request)
-    {
-        if (\Auth::guard('admins')->attempt(['email' => $request->email, 'password' => $request->password])) {
-//            return redirect()->intended('/api-admin');
-            return redirect()->route('get.admin.index');
-        }
+        $request->session()->flush();
 
-        return redirect()->back();
-    }
+        $request->session()->regenerate();
 
-    public function getLogoutAdmin()
-    {
-        \Auth::guard('admins')->logout();
-        return redirect()->to('/');
+        return redirect('/login');
     }
 }

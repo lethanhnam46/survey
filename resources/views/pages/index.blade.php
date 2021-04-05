@@ -2,10 +2,7 @@
 @section('form-content')
 
     <div id="myDynamicTable"> </div>
-    <div><button type="button" class="btn btn-block btn-success">Gửi</button></div>
-
-    <!-- 3mau4thuopctinh5rating -->
-    
+    <div><button type="button" class="btn btn-block btn-success"> Gửi </button></div>
 
     <script>
         function addTable() {
