@@ -17,7 +17,7 @@
     <div class="box">
         <div class="box-header with-border">
         	<div class="box-header">
-              <h3 class="box-title"> <a href="" class="btn btn-primary"> <i class="fa fa-plus"></i> Thêm mới</a></h3>
+              <h3 class="box-title"> <a href="{{ route('survey.create') }}" class="btn btn-primary"> <i class="fa fa-plus"></i> Thêm mới</a></h3>
             </div>
             <div class="col-md-12">
                 <div class="box">

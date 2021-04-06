@@ -1,12 +1,12 @@
 @extends('layouts.app_master_frontend')
 @section('form-content')
 
-    <div id="myDynamicTable"> </div>
+    <div id="table"> </div>
     <div><button type="button" class="btn btn-block btn-success"> Gửi </button></div>
 
     <script>
         function addTable() {
-        var myTableDiv = document.getElementById("myDynamicTable");
+        var myTableDiv = document.getElementById("table");
         
         var table = document.createElement('TABLE');
         table.border = '1';

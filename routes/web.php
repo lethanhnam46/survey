@@ -17,19 +17,23 @@ use App\Http\Controllers\Admin\Auth\AdminLoginController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Auth::routes();
 
 
-Route::middleware('auth')->group(function(){
+Route::middleware('auth')->group(function () {
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('survey', [SurveyController::class, 'index'])->name('survey.index');
-    Route::get ('active/{id}',[SurveyController::class,'active'])->name('survey.active');
+
+    Route::get('create', [SurveyController::class, 'create'])->name('survey.create');
+    Route::post('create', [SurveyController::class, 'store']);
+
+    Route::get('update/{id}', [SurveyController::class, 'edit'])->name('survey.update');
+    Route::post('update/{id}', [SurveyController::class, 'update']);
+
+    Route::get('active/{id}', [SurveyController::class, 'active'])->name('survey.active');
 });
 
-Route::group(['prefix' => '/khaosat'], function() {
-    Route::get('', [PagesController::class,'index']);
+Route::group(['prefix' => '/khaosat'], function () {
+    Route::get('', [PagesController::class, 'index']);
 });
-
-
-
-
