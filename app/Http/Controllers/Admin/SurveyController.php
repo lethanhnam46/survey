@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Models\Survey;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SurveyRequest;
+use Illuminate\Support\Facades\Auth;
 
 class SurveyController extends Controller
 {
@@ -38,9 +41,16 @@ class SurveyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SurveyRequest $request)
     {
-        //
+        $data=$request->except('_token');
+        $data['user_id'] = Auth::user()->id;
+        $data['note'] = $request->note;
+        //$data['start_time'] = Carbon::now();
+
+        $id =Survey::insertGetId($data);
+
+        return redirect()->back();
     }
 
     /**
