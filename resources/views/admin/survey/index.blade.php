@@ -49,7 +49,7 @@
                                         </td>
                                         <td> {{ $survey->note }} </td>
                                         <td> 
-                                            <a href="" class="label label-success"> <i class="fa fa-eye"></i> Xem Khảo Sát</a>
+                                            <a href="{{route('page.index', $survey->id)}}" class="label label-success"> <i class="fa fa-eye"></i> Xem Khảo Sát</a>
                                             <a href="" class="label label-primary"> <i class="fa fa-pencil" aria-hidden="true"></i> chỉnh sửa </a> 
                                         </td>
                                     </tr>

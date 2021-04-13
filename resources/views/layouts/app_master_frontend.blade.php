@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Khảo sát trang phục áo chống nắng</title>
+        <title> {{ $data->name }}</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.7 -->
@@ -32,10 +32,10 @@
     <body class="hold-transition skin-blue sidebar-mini">
         <div class="box box-default">
           <div class="box-header with-border">
-            <h3 class="box-title">Khảo sát trang phục áo chống nắng</h3>
+            <h3 class="box-title">{{ $data->name }}</h3>
           </div>
           <div class="box-body">
-            Cần khảo sát một số thuộc tính của trang phục áo chống nắng
+            {{ $data->note }}
           </div>
         @yield('form-content')
         </div>

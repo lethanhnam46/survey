@@ -28,6 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::get('create', [SurveyController::class, 'create'])->name('survey.create');
     Route::post('create', [SurveyController::class, 'store']);
 
+    Route::get('create', [SurveyController::class, 'create'])->name('survey.create');
+    Route::post('create', [SurveyController::class, 'store']);
+
     Route::get('update/{id}', [SurveyController::class, 'edit'])->name('survey.update');
     Route::post('update/{id}', [SurveyController::class, 'update']);
 
@@ -35,5 +38,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::group(['prefix' => '/khaosat'], function () {
-    Route::get('', [PagesController::class, 'index']);
+    Route::get('/{id}', [PagesController::class, 'index'])->name('page.index');
 });
+
+
+Route::post('survey-action',  [SurveyController::class, 'surveyAction'])->name('survey.action');
