@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Rating extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['survey_id','prototype_id','properties_id','del_flag','level','rating'];
+
 }

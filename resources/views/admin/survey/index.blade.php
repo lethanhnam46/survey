@@ -1,14 +1,14 @@
 @extends('layouts.app_master_admin')
+@section('title', 'khảo sát')
 @section('content')
-<!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
         Quản lý khảo sát hiện tại
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="">Survey</a></li>
-        <li class="active">List</li>
+        <li><a href="{{ route('home')}}"><i class="fa fa-dashboard"></i> Trang chủ</a></li>
+        <li><a href="{{ route('survey.index')}}">Khảo sát</a></li>
+        <li class="active">danh sách</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -49,7 +49,7 @@
                                         </td>
                                         <td> {{ $survey->note }} </td>
                                         <td> 
-                                            <a href="{{route('page.index', $survey->id)}}" class="label label-success"> <i class="fa fa-eye"></i> Xem Khảo Sát</a>
+                                            <a href="{{ route('page.index', $survey->slug)}}" class="label label-success"> <i class="fa fa-eye"></i> Xem Khảo Sát</a>
                                             <a href="" class="label label-primary"> <i class="fa fa-pencil" aria-hidden="true"></i> chỉnh sửa </a> 
                                         </td>
                                     </tr>
@@ -65,7 +65,6 @@
         </div>
         <!-- /.box-body -->
         <div class="box-footer">
-            {!! $surveys->links() !!}
         </div>
         <!-- /.box-footer-->
     </div>

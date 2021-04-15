@@ -37,8 +37,9 @@ Route::middleware('auth')->group(function () {
     Route::get('active/{id}', [SurveyController::class, 'active'])->name('survey.active');
 });
 
-Route::group(['prefix' => '/khaosat'], function () {
-    Route::get('/{id}', [PagesController::class, 'index'])->name('page.index');
+Route::group(['prefix' => ''], function () {
+    Route::get('/{slug}', [PagesController::class, 'index'])->name('page.index');
+    //Route::post('/{slug}', [PagesController::class, 'index'])->name('page.index');
 });
 
 

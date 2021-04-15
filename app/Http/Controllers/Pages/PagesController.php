@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
-    public function index($id){
-        $survey = Survey::find($id);
+    public function index($slug){
+        $survey = Survey::where('slug',$slug)->first();
         $data['name'] = $survey->survey_name;
         $data['note'] = $survey->note;
         return view('pages.index',['data' => $data]);

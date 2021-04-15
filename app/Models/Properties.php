@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Properties extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['properties','del_flag'];
+
+    public function prototypes()
+    {
+        return $this->belongsToMany('Prototype','Rating');
+    }
 }

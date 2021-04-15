@@ -8,6 +8,10 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SurveyRequest;
+use App\Models\Properties;
+use App\Models\Prototype;
+use App\Models\Rating;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class SurveyController extends Controller
@@ -19,7 +23,8 @@ class SurveyController extends Controller
      */
     public function index()
     {
-        $survey = Survey::paginate(10);
+        $id = Auth::user()->id;
+        $survey = User::find($id)->surveys;
         $viewData = [
             'surveys' => $survey
         ];
@@ -42,17 +47,41 @@ class SurveyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(SurveyRequest $request)
+    public function store(Request $request)
     {
         $data = $request->except('_token');
-        // $data['user_id'] = Auth::user()->id;
-        // $data['survey_name'] = $request->survey_name;
-        // $data['slug'] = Str::slug($request->survey_name);
-        // $data['note'] = $request->note;
-         $data['start_time'] = Carbon::now();
+        $surveys['user_id'] = Auth::user()->id;
+        $surveys['survey_name'] = $request->survey_name;
+        $surveys['slug'] = Str::slug($request->survey_name);
+        $surveys['note'] = $request->note;
+        $surveys['start_time'] = Carbon::now();
+        $properties=[];
+        $prototypes=[];
+        foreach ($data as $key => $value) {
+                if ( substr($key,0,3) == 'pp_') array_push($properties,$value);
+                if ( substr($key,0,3) == 'pt_') array_push($prototypes,$value);
+        }
 
-        //$s_id =Survey::insertGetId($data);
-        dd($data);
+        $savedata = array(
+            'surveys' => $surveys,
+            'properties' => $properties,
+            'prototypes' => $prototypes
+        );
+
+        $survey_id= Survey::create($surveys);
+        foreach ($prototypes as $prototypes_key => $prototypes_value) {
+            $prototypes_id=Prototype::create(['prototype' => $prototypes_value]);
+            foreach($properties as $properties_key => $properties_value) {
+                $properties_id=Properties::create(['properties' => $properties_value]);
+                $rating = array(
+                    'survey_id' => $surey_id,
+                    'prototype_id' => $prototypes_id,
+                    'properties_id' => $properties_id,
+                    'level' => $request->level
+                );
+                $rating_id = Rating::create($rating);
+            }
+        }
         return redirect()->back();
     }
 
@@ -112,7 +141,7 @@ class SurveyController extends Controller
     public function surveyAction(Request $request) {
         echo '<pre>';
         print_r($request->request);
-        echo '</pre>';
+        echo '</prev>';
     }
 
 }
