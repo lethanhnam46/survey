@@ -55,33 +55,38 @@ class SurveyController extends Controller
         $surveys['slug'] = Str::slug($request->survey_name);
         $surveys['note'] = $request->note;
         $surveys['start_time'] = Carbon::now();
-        $properties=[];
         $prototypes=[];
+        $properties=[];
         foreach ($data as $key => $value) {
                 if ( substr($key,0,3) == 'pp_') array_push($properties,$value);
                 if ( substr($key,0,3) == 'pt_') array_push($prototypes,$value);
         }
-
-        $savedata = array(
-            'surveys' => $surveys,
-            'properties' => $properties,
-            'prototypes' => $prototypes
-        );
-
-        $survey_id= Survey::create($surveys);
-        foreach ($prototypes as $prototypes_key => $prototypes_value) {
-            $prototypes_id=Prototype::create(['prototype' => $prototypes_value]);
-            foreach($properties as $properties_key => $properties_value) {
-                $properties_id=Properties::create(['properties' => $properties_value]);
-                $rating = array(
-                    'survey_id' => $surey_id,
-                    'prototype_id' => $prototypes_id,
-                    'properties_id' => $properties_id,
-                    'level' => $request->level
-                );
-                $rating_id = Rating::create($rating);
+ 
+        $survey_id= Survey::insertGetId($surveys);
+        if($survey_id) {
+            foreach ($prototypes as $prototypes_key => $prototypes_value) {
+                if ($prototypes_value) {
+                    $prototypes_id=Prototype::insertGetId(['prototype' => $prototypes_value]);
+                    foreach($properties as $properties_key => $properties_value) {
+                        if ($properties_value) {
+                            $properties_id=Properties::insertGetId(['properties' => $properties_value]);
+                            $rating = array(
+                                'survey_id' => $survey_id,
+                                'prototype_id' => $prototypes_id,
+                                'properties_id' => $properties_id,
+                                'level' => $request->level
+                            );
+                            if ($rating) {
+                                Rating::create($rating);
+                            }
+                        }
+                       
+                    }
+                }
+                
             }
         }
+
         return redirect()->back();
     }
 
@@ -134,6 +139,7 @@ class SurveyController extends Controller
     {
         $survey=Survey::find($id);
         $survey->del_flag =! $survey->del_flag;
+        $survey['end_time']= Carbon::now();
         $survey->save();
         return redirect()->back();
     }
