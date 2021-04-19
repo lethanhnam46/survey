@@ -23,6 +23,10 @@
                 <div class="box">
                     <div class="box-body">
                         <table class="table">
+                            @php
+                                $stt=0;
+                                $stt++;   
+                            @endphp
                             <tbody>
                                 <tr>
                                     <th style="width: 10px">STT</th>
@@ -36,7 +40,7 @@
                                 @if ($surveys)
                                     @foreach($surveys as $survey)
                                     <tr>
-                                        <td> {{ $survey->id }} </td>
+                                        <td> {{ $stt }} </td>
                                         <td> {{ $survey->survey_name }} </td>
                                         <td> {{ $survey->start_time }} </td>
                                         <td> {{ $survey->end_time }} </td>

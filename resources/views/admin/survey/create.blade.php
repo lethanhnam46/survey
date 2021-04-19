@@ -28,7 +28,7 @@
                         @endif
                     </div> --}}
                         <div class="col-sm-12">
-                            <div class="form-group col-sm-3 ">
+                            <div class="form-group col-sm-4 ">
                                 <label for="name"> Tên cuộc khảo sát </label>
                                 <input type="text" class="form-control" name='survey_name'
                                     placeholder="Nhập tên khảo sát ...">
@@ -40,15 +40,6 @@
                             <div class="col-sm-2">
                                 <label for="name"> Mức độ đánh giá</label>
                                 <input type="text" class="form-control" name='level' placeholder="Nhập mức độ ...">
-                            </div>
-                            <div class="form-group col-sm-1">
-                                <label>Date:</label>
-                                <div class="input-group date">
-                                    <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
-                                    </div>
-                                    <input type="text" class="form-control pull-right" id="datepicker">
-                                </div>
                             </div>
                         </div>
                         <div class="col-sm-12">

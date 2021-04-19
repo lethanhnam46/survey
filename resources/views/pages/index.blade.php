@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title> {{ $data['name'] }}</title>
+    <title> {{ $data['survey_name'] }}</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -35,10 +35,10 @@
 <body class="hold-transition skin-blue sidebar-mini">
     <header class="box box-default">
         <div class="box-header with-border"style="text-align: center">
-            <h3 class="box-title" >{{ $data['name'] }}</h3>
+            <h3 class="box-title" >{{ $data['survey_name'] }}</h3>
         </div>
         <div class="box-body" style="text-align: center">
-            {{ $data['note'] }}
+            {{ $data['survey_note'] }}
         </div>
     </header>
     <div class="container">
@@ -47,29 +47,9 @@
                 <form action="{{ route('survey.action') }}" method="POST" id="mainForm">
                     @csrf
                     @php
-                        $prototypes = [
-                            1 => 'Mẫu 1',
-                            2 => 'Mẫu 2',
-                            3 => 'Mẫu 3',
-                            4 => 'Mẫu 4',
-                            5 => 'Mẫu 5',
-                            6 => 'Mẫu 6',
-                        ];
-                        $properties = [
-                            1 => 'Thuộc tính 1',
-                            2 => 'Thuộc tính 2',
-                            3 => 'Thuộc tính 3',
-                            4 => 'Thuộc tính 4',
-                            5 => 'Thuộc tính 5',
-                            6 => 'Thuộc tính 6',
-                            7 => 'Thuộc tính 7',
-                            8 => 'Thuộc tính 8',
-                            9 => 'Thuộc tính 9',
-                            10 => 'Thuộc tính 10',
-                            11 => 'Thuộc tính 11',
-                            12 => 'Thuộc tính 12',
-                        ];
-                        $levels = 6;
+                        $prototypes = $data['prototype'];
+                        $properties = $data['properties'];
+                        $levels = $data['level'];
                     @endphp
                     <table class="table table-bordered table-hover" id="tab_logic">
                         <thead>
