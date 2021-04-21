@@ -32,15 +32,8 @@
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
-    <div class="box box-default">
-        <div class="box-header with-border">
-            <h3 class="box-title">{{ $data->name }}</h3>
-        </div>
-        <div class="box-body">
-            {{ $data->note }}
-        </div>
-        @yield('form-content')
-    </div>
+   
+    @yield('content')
     <footer class="main-footer">
         <strong>Liên hệ: <a href="https://facebook.com/lethanhnam46"> Facebook của tôi </a></strong>
     </footer>

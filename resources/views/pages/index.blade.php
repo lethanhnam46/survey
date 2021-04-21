@@ -34,55 +34,56 @@
 
 <body class="hold-transition skin-blue sidebar-mini">
     <header class="box box-default">
-        <div class="box-header with-border"style="text-align: center">
-            <h3 class="box-title" >{{ $data['survey_name'] }}</h3>
+        <div class="box-header with-border" style="text-align: center">
+            <h3 class="box-title">{{ $data['survey_name'] }}</h3>
         </div>
         <div class="box-body" style="text-align: center">
             {{ $data['survey_note'] }}
         </div>
     </header>
     <div class="container">
-        <div class="row clearfix">
-            <div class="col-md-12 column">
-                <form action="{{ route('survey.action') }}" method="POST" id="mainForm">
-                    @csrf
-                    @php
-                        $prototypes = $data['prototype'];
-                        $properties = $data['properties'];
-                        $levels = $data['level'];
-                    @endphp
-                    <table class="table table-bordered table-hover" id="tab_logic">
-                        <thead>
+        <div class="col-md-12  column">
+            <form action="{{ route('page.store', $data['id']) }}" method="POST" id="mainForm">
+                @csrf
+                @php
+                    $prototypes = $data['prototype'];
+                    $properties = $data['properties'];
+                    $levels = $data['level'];
+                @endphp
+                <table class="table table-bordered table-hover" id="tab_logic" style="text-align: center">
+                    <thead>
+                        <tr>
+                            {{-- for các mẫu --}}
+                            <th></th>
+                            @foreach ($prototypes as $keyPrototypes => $namePrototype)
+                                <th>
+                                    <img class="image_pt" src="{{ asset(pare_url_file($namePrototype)) }}"
+                                        style="with: 120px; height: 180px">
+                                </th>
+                            @endforeach
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($properties as $keyProperties => $nameProperties)
                             <tr>
-                                {{-- for các mẫu --}}
-                                <th></th>
+                                <td>{{ $nameProperties }}</td>
                                 @foreach ($prototypes as $keyPrototypes => $namePrototype)
-                                    <th>{{ $namePrototype }}</th>
+                                    <td>
+                                        @for ($i = 0; $i < $levels; $i++)
+                                            <input type="radio"
+                                                name="pp_{{ $keyPrototypes }}_{{ $keyProperties }}" id=""
+                                                value="{{ $i + 1 }} " />
+                                        @endfor
+                                    </td>
                                 @endforeach
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($properties as $keyProperties => $nameProperties)
-                                <tr>
-                                    <td>{{ $nameProperties }}</td>
-                                    @foreach ($prototypes as $keyPrototypes => $namePrototype)
-                                        <td>
-                                            @for ($i = 0; $i < $levels; $i++)
-                                                <input type="radio"
-                                                    name="pp_{{ $keyPrototypes }}_{{ $keyProperties }}" id=""
-                                                    value="{{ $i }}" />
-                                            @endfor
-                                        </td>
-                                    @endforeach
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-					<div style="text-align: center">
-                    <button type="submit" id="btnSubmit" class="btn btn-primary" >Submit</button>
-					</div>
-                </form>
-            </div>
+                        @endforeach
+                    </tbody>
+                </table>
+                <div style="text-align: center">
+                    <button type="submit" id="btnSubmit" class="btn btn-primary">Gửi</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -92,6 +93,7 @@
     <!-- ./wrapper -->
     <!-- jQuery 3 -->
     <script src="{{ asset('admin/bower_components/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ asset('admin/plugins/jquery.elevatezoom.js') }}"></script>
     <!-- Bootstrap 3.3.7 -->
     <script src="{{ asset('admin/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- PACE -->
@@ -104,6 +106,17 @@
     <script src="{{ asset('admin/dist/js/adminlte.min.js') }}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{ asset('admin/dist/js/demo.js') }}"></script>
+
+    <script>
+        $('.image_pt').elevateZoom({
+            //scrollZoom : true
+            zoomWindowWidth 1000,
+            zoomWindowHeight:1000
+            easing : true
+        });
+
+    </script>
+
 </body>
 
 </html>

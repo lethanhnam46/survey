@@ -38,7 +38,7 @@ if (!function_exists('upload_image')) {
         if ($folder)
             $path = public_path() . '/uploads/' . $folder . '/' . date('Y/m/d/');
 
-        if (File::exists($path))
+        if (!File_exists($path))
             mkdir($path, 0777, true);
 
         // di chuyen file vao thu muc uploads
@@ -55,30 +55,6 @@ if (!function_exists('upload_image')) {
     }
 }
 
-if (!function_exists('get_client_ip')) {
-    function get_client_ip()
-    {
-        $ipaddress = '';
-        if (getenv('HTTP_CLIENT_IP'))
-            $ipaddress = getenv('HTTP_CLIENT_IP');
-        else if (getenv('HTTP_X_FORWARDED_FOR'))
-            $ipaddress = getenv('HTTP_X_FORWARDED_FOR');
-        else if (getenv('HTTP_X_FORWARDED'))
-            $ipaddress = getenv('HTTP_X_FORWARDED');
-        else if (getenv('HTTP_FORWARDED_FOR'))
-            $ipaddress = getenv('HTTP_FORWARDED_FOR');
-        else if (getenv('HTTP_FORWARDED'))
-            $ipaddress = getenv('HTTP_FORWARDED');
-        else if (getenv('REMOTE_ADDR'))
-            $ipaddress = getenv('REMOTE_ADDR');
-        else
-            $ipaddress = 'UNKNOWN';
-
-        return $ipaddress;
-    }
-}
-
-
 if (!function_exists('pare_url_file')) {
     function pare_url_file($image, $folder = '')
     {
@@ -91,93 +67,5 @@ if (!function_exists('pare_url_file')) {
             $time = str_replace('_', '/', $explode[0]);
             return '/uploads' . $folder . '/' . date('Y/m/d', strtotime($time)) . '/' . $image;
         }
-    }
-}
-
-if (!function_exists('device_agent')) {
-    function device_agent()
-    {
-        $agent = new Jenssegers\Agent\Agent();
-
-        if ($agent->isMobile()) {
-            return 'mobile';
-        } elseif ($agent->isDesktop()) {
-            return 'desktop';
-        } elseif ($agent->isTablet()) {
-            return 'tablet';
-        }
-    }
-}
-
-if (!function_exists('number_price')) {
-    function number_price($price, $sale = 0)
-    {
-        if ($sale == 0) {
-            return $price;
-        }
-
-        $price = ((100 - $sale) * $price) / 100;
-
-        return $price;
-    }
-}
-
-if (!function_exists('get_data_user')) {
-    function get_data_user($type, $field = 'id')
-    {
-        return Auth::guard($type)->user() ? Auth::guard($type)->user()->$field : '';
-    }
-}
-
-if (!function_exists('get_name_short')) {
-    function get_name_short($name)
-    {
-        if ($name == '') return "[N\A]";
-
-        $name      = trim($name);
-
-        $arrayName = explode(' ', $name,2);
-        $string = '';
-        if (count($arrayName)) {
-            foreach ($arrayName as $item) {
-                $string .= mb_substr($item,0,1);
-            }
-        }
-
-        return $string;
-    }
-}
-
-if (!function_exists('detectDevice'))
-{
-    function detectDevice()
-    {
-        $instance = new Jenssegers\Agent\Agent();
-
-        return $instance;
-    }
-}
-
-if (!function_exists('get_agent'))
-{
-    function get_agent()
-    {
-        return [
-            'device'       => detectDevice()->device(),
-            'platform'     => $platform = detectDevice()->platform(),
-            'platform_ver' => detectDevice()->version($platform),
-            'browser'      => $browser = detectDevice()->browser(),
-            'browser_ver'  => detectDevice()->version($browser),
-            'time'         => Carbon::now()
-        ];
-    }
-}
-
-if( !function_exists('get_time_login'))
-{
-    function get_time_login($data)
-    {
-        $data = json_decode($data, true);
-        return Arr::last($data);
     }
 }

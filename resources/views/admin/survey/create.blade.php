@@ -18,7 +18,7 @@
         <div class="box">
             <div class="box-header with-border">
                 <div class="box-body">
-                    <form role="form" action="" method="POST">
+                    <form role="form" action="" method="POST" enctype="multipart/form-data">
                         @csrf
                         {{-- <div class="form-group {{ $errors->first('survey_name') ? 'has-error' : ''}} col-sm-3 " >
                         <label for="name"> Tên cuộc khảo sát <span class="text-danger">(**)</span></label>
@@ -28,7 +28,7 @@
                         @endif
                     </div> --}}
                         <div class="col-sm-12">
-                            <div class="form-group col-sm-4 ">
+                            <div class="form-group col-sm-3 ">
                                 <label for="name"> Tên cuộc khảo sát </label>
                                 <input type="text" class="form-control" name='survey_name'
                                     placeholder="Nhập tên khảo sát ...">

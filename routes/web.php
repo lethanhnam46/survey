@@ -22,6 +22,7 @@ Auth::routes();
 
 
 Route::middleware('auth')->group(function () {
+    Route::get('', [HomeController::class, 'index']);
     Route::get('home', [HomeController::class, 'index'])->name('home');
     Route::get('survey', [SurveyController::class, 'index'])->name('survey.index');
 
@@ -39,8 +40,8 @@ Route::middleware('auth')->group(function () {
 
 Route::group(['prefix' => ''], function () {
     Route::get('/{slug}', [PagesController::class, 'index'])->name('page.index');
-    //Route::post('/{slug}', [PagesController::class, 'index'])->name('page.index');
+    Route::post('/{slug}',  [PagesController::class, 'store'])->name('page.store');
 });
 
 
-Route::post('survey-action',  [SurveyController::class, 'surveyAction'])->name('survey.action');
+
