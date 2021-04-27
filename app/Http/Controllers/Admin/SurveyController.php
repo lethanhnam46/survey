@@ -11,6 +11,7 @@ use App\Models\Properties;
 use App\Models\Prototype;
 use App\Models\Rating;
 use App\Models\User;
+use App\Models\PrototypeProperties;
 use Illuminate\Support\Facades\Auth;
 
 class SurveyController extends Controller
@@ -32,43 +33,49 @@ class SurveyController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->except('_token');
-        $surveys['user_id'] = Auth::user()->id;
-        $surveys['survey_name'] = $request->survey_name;
-        $surveys['slug'] = Str::slug($request->survey_name);
-        $surveys['level'] = $request->level;
-        $surveys['note'] = $request->note;
-        $surveys['start_time'] = Carbon::now();
-        $prototypes = [];
-        $properties = [];
+        $data = $request->except('_token','survey_name','level','note');
+        $survey = [
+            'user_id' => Auth::user()->id,
+            'survey_name' => $request->survey_name,
+            'slug' => Str::slug($request->survey_name),
+            'level' => $request->level,
+            'note' => $request->note,
+            'created_at' =>  Carbon::now()
+        ];
+        $survey_id = Survey::insertGetId($survey);
+
+        $id_pp = [];
         foreach ($data as $key => $value) {
-            if (substr($key, 0, 3) == 'pp_') $properties[Properties::insertGetId(['properties' => $value])] = $value;
+            if (substr($key, 0, 3) == 'pp_') {
+                $properties = [
+                    'properties_name' => $value,
+                    'weight' => $data['ts_'.$key],
+                    'created_at' =>  Carbon::now()
+                ];
+                array_push( $id_pp, Properties::insertGetId($properties));
+            }
+        }
+
+        foreach ($data as $key => $value) {
             if (substr($key, 0, 3) == 'pt_') {
                 $image = upload_image($key);
-                $prototypes[Prototype::insertGetId(['prototype' => $image['name']])] =  $value;
-            }
-        }
-
-        $survey_id = Survey::insertGetId($surveys);
-        if ($survey_id) {
-            foreach ($prototypes as $prototypes_key => $prototypes_value) {
-                if ($prototypes_value) {
-                    foreach ($properties as $properties_key => $properties_value) {
-                        if ($properties_value) {
-                            $rating = array(
-                                'survey_id' => $survey_id,
-                                'prototype_id' => $prototypes_key,
-                                'properties_id' => $properties_key,
-                            );
-                            if ($rating) {
-                                Rating::create($rating);
-                            }
-                        }
-                    }
+                $prototype = [
+                    'survey_id' =>$survey_id,
+                    'prototype_name' => $image['name'],
+                    'created_at' =>  Carbon::now()
+                ];
+                $id_pt = Prototype::insertGetId($prototype);
+                foreach ($id_pp as $key => $value) {
+                    $sync = [
+                        'prototype_id'=>$id_pt,
+                        'properties_id'=>$value,
+                        'created_at' =>  Carbon::now()
+                    ];
+                    PrototypeProperties::insert($sync);
                 }
             }
+            
         }
-
         return redirect()->route('survey.index');
     }
 
@@ -76,7 +83,7 @@ class SurveyController extends Controller
     {
         $survey = Survey::find($id);
         $survey->del_flag = !$survey->del_flag;
-        $survey['end_time'] = Carbon::now();
+        $survey['updated_at'] = Carbon::now();
         $survey->save();
         return redirect()->back();
     }

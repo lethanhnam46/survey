@@ -27,8 +27,8 @@
                                 <tr>
                                     <th style="width: 10px">#</th>
                                     <th> Tên khảo sát </th>
-                                    <th> Bắt đầu </th>
-                                    <th> Kết thúc </th>
+                                    <th> Ngày tạo </th>
+                                    <th> Update </th>
                                     <th> Hành động </th>
                                     <th> Ghi chú </th>
                                     <th> Chi tiết </th>
@@ -38,8 +38,8 @@
                                     <tr>
                                         <td> {{ $survey->id }} </td>
                                         <td> {{ $survey->survey_name }} </td>
-                                        <td> {{ $survey->start_time }} </td>
-                                        <td> {{ $survey->end_time }} </td>
+                                        <td> {{ $survey->created_at }} </td>
+                                        <td> {{ $survey->updated_at }} </td>
                                         <td>
                                             @if ($survey->del_flag==1)
                                                 <a href="{{route('survey.active', $survey->id)}}" class="label label-success"> Hoạt động</a>

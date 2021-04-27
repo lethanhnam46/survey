@@ -9,10 +9,10 @@ class Prototype extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['prototype','del_flag'];
+    protected $fillable = ['survey_id','prototype'];
 
     public function properties()
     {
-        return $this->belongsToMany('Prototypes','Rating');
+        return $this->belongsToMany(properties::class,'prototypes_properties', 'prototype_id','properties_id');
     }
 }

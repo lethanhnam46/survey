@@ -11,8 +11,13 @@ class Survey extends Model
     
     protected $guarded = [''];
     
+    public function prototypes()
+    {
+        return $this->hasMany(prototype::class);
+    }
+    
     public function ratings()
     {
-        return $this->hasMany('rating');
+        return $this->hasMany(rating::class);
     }
 }

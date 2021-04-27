@@ -16,7 +16,7 @@ class CreatePropertiesTable extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('properties_name');
-            $table->tinyInteger('del_flag')->default(0);
+            $table->integer('weight'); 
             $table->timestamps();
         });
     }

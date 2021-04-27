@@ -17,9 +17,9 @@ class CreateSurveysTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
             $table->string('survey_name');
+            $table->string('slug')->unique();
+            $table->tinyInteger('level');
             $table->tinyInteger('del_flag')->default(1);
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
             $table->string('note');
             $table->timestamps();
 

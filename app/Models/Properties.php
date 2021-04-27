@@ -9,10 +9,10 @@ class Properties extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['properties','del_flag'];
+    protected $fillable = ['properties','weight'];
 
     public function prototypes()
     {
-        return $this->belongsToMany('Prototype','Rating');
+        return $this->belongsToMany(prototype::class);
     }
 }

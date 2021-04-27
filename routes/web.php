@@ -40,7 +40,7 @@ Route::middleware('auth')->group(function () {
 
 Route::group(['prefix' => ''], function () {
     Route::get('/{slug}', [PagesController::class, 'index'])->name('page.index');
-    Route::post('/{slug}',  [PagesController::class, 'store'])->name('page.store');
+    Route::post('/{id}',  [PagesController::class, 'store'])->name('page.store');
 });
 
 

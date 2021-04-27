@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Rating extends Model
+class PrototypeProperties extends Model
 {
     use HasFactory;
 
-    protected $guarded = [''];
+    protected $fillable = ['prototype_id','properties_id'];
 
-    protected $fillable = ['survey_id','created_at'];
-
+    public $table = "prototypes_properties";
 }

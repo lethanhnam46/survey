@@ -15,9 +15,11 @@ class CreatePrototypesTable extends Migration
     {
         Schema::create('prototypes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('survey_id')->unsigned();
             $table->string('prototype_name');
-            $table->tinyInteger('del_flag')->default(0);
             $table->timestamps();
+
+            $table->foreign('survey_id')->references('id')->on('surveys');
         });
     }
 

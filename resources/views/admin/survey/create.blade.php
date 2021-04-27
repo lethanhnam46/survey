@@ -20,13 +20,6 @@
                 <div class="box-body">
                     <form role="form" action="" method="POST" enctype="multipart/form-data">
                         @csrf
-                        {{-- <div class="form-group {{ $errors->first('survey_name') ? 'has-error' : ''}} col-sm-3 " >
-                        <label for="name"> Tên cuộc khảo sát <span class="text-danger">(**)</span></label>
-                        <input type="text" class="form-control" name='survey_name' placeholder="Nhập tên khảo sát ...">
-                        @if ($errors->first('survey_name'))
-                        <span class="text-danger">{{$errors->first('survey_name')}}</span>
-                        @endif
-                    </div> --}}
                         <div class="col-sm-12">
                             <div class="form-group col-sm-3 ">
                                 <label for="name"> Tên cuộc khảo sát </label>
@@ -39,20 +32,48 @@
                             </div>
                             <div class="col-sm-2">
                                 <label for="name"> Mức độ đánh giá</label>
-                                <input type="text" class="form-control" name='level' placeholder="Nhập mức độ ...">
+                                <select name="level" class="form-control">
+                                  <option selected value="5">5</option>
+                                  <option value="7">7</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-sm-12">
-                            <div class="col-sm-4">
-                                <label class="control-label" for="pp">Thuộc tính</label>
-                                <input class="form-control" id="pp_1" name="pp_1" type="text"
-                                    placeholder="Nhập thuộc tính 1" />
-                                <button id="b1" class="btn btn-info add-pp" type="button">Thêm thuộc tính</button>
+                            <div class="col-sm-4" style="text-align: center">
+                              <table class="table table-bordered" id="tbl_pp">
+                                  <tr>
+                                    <th>
+                                        <label class="control-label" for="pp">Thuộc tính</label>
+                                    </th>
+                                    <th>
+                                        <label class="control-label" for="pp">Trọng số (%)</label>
+                                    </th>
+                                  </tr>
+                                  <tr >
+                                    <td>
+                                      <input class="form-control" name="pp_1" type="text" placeholder="Nhập thuộc tính 1" />
+                                    </td>
+                                    <td>
+                                      <input class="form-control" name="ts_pp_1" type="text" placeholder="Nhập trọng số thuộc tính 1" />
+                                    </td>
+                                  </tr>
+                              </table>
+                              <button class="add_pp btn btn-info" type="button">Thêm thuộc tính</button>
                             </div>
-                            <div class="col-sm-2">
-                                <label class="control-label" for="pt">Nhập mẫu vẽ</label>
-                                <input type="file" id="pt_1" name="pt_1">
-                                <button id="b1" class="btn btn-info add-pt" type="button"> Thêm mẫu</button>
+                            <div class="col-sm-2" style="text-align: center">
+                              <table class="table table-bordered" id="tbl_pt">
+                                <tbody>
+                                <th>
+                                    <label class="control-label" for="pt">Mẫu thiết kế</label>
+                                </th>
+                                <tr id='addr_pt'>
+                                  <td>
+                                     <input class="form-control " type="file" name="pt_1">
+                                  </td>
+                                </tr>
+                                </tbody>
+                              </table>
+                              <button class="add_pt btn btn-info" type="button"> Thêm mẫu</button>
                             </div>
                             <div class="col-sm-2"> </div>
                             <div class="box-footer text-center, col-sm-4">
@@ -74,31 +95,17 @@
 
         <script>
             $(document).ready(function() {
-                var next = 1;
-                $(".add-pp").click(function(e) {
-                    e.preventDefault();
-                    var addto = "#pp_" + next;
-                    next = next + 1;
-                    var newIn = '<br /><input class="form-control" id="pp_' + next + '" name="pp_' + next +
-                        '" type="text" placeholder="Nhập thuộc tính ' + next + '"/>';
-                    var newInput = $(newIn);
-                    $(addto).after(newInput);
-                    $("#count").val(next);
+                var i = 2;
+                var k = 2;
+                $(".add_pp").click(function(e) {
+                    $('#tbl_pp').append('<tr><td><input class="form-control" name="pp_'+i+'" type="text" placeholder="Nhập thuộc tính '+i+'"/> </td><td> <input class="form-control" name="ts_pp_'+i+'" type="text" placeholder="Nhập trọng số thuộc tính '+i+' "/> </td></tr>');
+                    i++;
+                });
+                $(".add_pt").click(function(e) {
+                    $('#tbl_pt').append('<tr><td><input class="form-control" name="pt_'+k+'" type="file"/></td></tr>');
+                    k++;
                 });
             });
-            $(document).ready(function() {
-                var next = 1;
-                $(".add-pt").click(function(e) {
-                    e.preventDefault();
-                    var addto = "#pt_" + next;
-                    next = next + 1;
-                    var newIn = '<br /><input type="file" id="pt_' + next + '" name="pt_' + next + '""/>';
-                    var newInput = $(newIn);
-                    $(addto).after(newInput);
-                    $("#count").val(next);
-                });
-            });
-
         </script>
     </section>
     <!-- /.content -->
