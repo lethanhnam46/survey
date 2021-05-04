@@ -29,11 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::get('create', [SurveyController::class, 'create'])->name('survey.create');
     Route::post('create', [SurveyController::class, 'store']);
 
-    Route::get('create', [SurveyController::class, 'create'])->name('survey.create');
-    Route::post('create', [SurveyController::class, 'store']);
-
     Route::get('update/{id}', [SurveyController::class, 'edit'])->name('survey.update');
     Route::post('update/{id}', [SurveyController::class, 'update']);
+
+    Route::get('result/{id}', [SurveyController::class, 'result'])->name('survey.result');
 
     Route::get('active/{id}', [SurveyController::class, 'active'])->name('survey.active');
 });

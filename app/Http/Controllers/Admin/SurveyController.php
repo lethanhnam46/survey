@@ -12,6 +12,7 @@ use App\Models\Prototype;
 use App\Models\Rating;
 use App\Models\User;
 use App\Models\PrototypeProperties;
+use App\Models\Result;
 use Illuminate\Support\Facades\Auth;
 
 class SurveyController extends Controller
@@ -86,5 +87,50 @@ class SurveyController extends Controller
         $survey['updated_at'] = Carbon::now();
         $survey->save();
         return redirect()->back();
+    }
+
+    public function results($id)
+    {
+        $prototypes = survey::find($id)->prototypes;
+        $properties = $prototypes[0]->properties;
+        $ratings = Rating::where('survey_id',$id)->get();
+        $total_score = [];
+        $sum =0;
+        $total = [];
+
+        foreach ($ratings as $rating)
+        {
+            $rating_id = $rating->id;
+            $results = $rating->results;
+            $prototype_ids = $results->unique('prototype_id')->pluck('prototype_id');
+            foreach ($prototype_ids as $prototype_id)
+            {
+                $total_score[$rating_id.'_'.$prototype_id] = $results->where('prototype_id',$prototype_id)->sum('weighted_score');
+            }
+        }
+        
+        $prototypes_id = $prototypes->pluck('id');
+
+        foreach ($prototypes_id as $value)
+        {
+            foreach ($total_score as $name_total_score => $value_total_score)
+            {   
+                $key = explode('_',$name_total_score)[1];
+                if ( $key == (string)$value) $sum += $value_total_score;
+            }
+            $total[$value] = round($sum/ count($prototypes_id),2);
+        }
+        
+        arsort($total);
+        $data = [
+            ''
+        ];
+
+    }
+
+    public function result($id)
+    {
+        $ratings = Rating::where('survey_id', $id)->get();
+        dd($ratings);
     }
 }

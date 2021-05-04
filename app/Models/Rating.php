@@ -11,6 +11,11 @@ class Rating extends Model
 
     protected $guarded = [''];
 
-    protected $fillable = ['survey_id','created_at'];
+    protected $fillable = ['',''];
+
+    public function results()
+    {
+        return $this->hasMany(Result::class);
+    }
 
 }

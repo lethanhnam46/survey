@@ -50,7 +50,7 @@
                                         <td> {{ $survey->note }} </td>
                                         <td> 
                                             <a href="{{ route('page.index', $survey->slug)}}" class="label label-success"> <i class="fa fa-eye"></i> Xem Khảo Sát</a>
-                                            <a href="" class="label label-primary"> <i class="fa fa-pencil" aria-hidden="true"></i> chỉnh sửa </a> 
+                                            <a href="{{ route('survey.result', $survey->id)}}" class="label label-primary"> <i class="fa fa-pencil" aria-hidden="true"></i> Xem kết quả </a> 
                                         </td>
                                     </tr>
                                     @endforeach

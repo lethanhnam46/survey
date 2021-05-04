@@ -1,7 +1,6 @@
 
-@extends('layouts.app_master_frontend')
-@section('survey_name', $data['survey_name'])
-@section('note', $data['survey_note'])
+@extends('layouts.app_master_admin')
+@section('title', 'khảo sát')
 
 @section('content')
     <style>
@@ -25,9 +24,11 @@
             <form action="{{ route('page.store', $data['id']) }}" method="POST" id="mainForm">
                 @csrf
                 @php
-                    $prototypes = $data['prototype_name'];
-                    $properties = $data['properties_name'];
-                    $levels = $data['level'];
+                    $prototypes = array(A,B,C);
+                    $properties = array(chong nang, chong mua, chong gio, chong nhiet);
+                    $weight = array(10,20,30,40);
+                    $rating = array(3,4,3,4);
+                    $weighted_score = array(3.0, 3.5, 4.5);
                 @endphp
                 <table class="table table-bordered table-hover" id="tab_logic" style="text-align: center; background: white ;">
                     <thead>
@@ -36,13 +37,13 @@
                             <th></th>
                             @foreach ($prototypes as $keyPrototypes => $namePrototype)
                                 <th style= "text-align: center;">
-                                    <img class="image_pt" src="{{ asset(pare_url_file($namePrototype)) }}"
-                                        style="with: 120px; height: 180px; ">
+                                    {{$namePrototype}}
                                 </th>
                             @endforeach
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody> 
+                        
                         @foreach ($properties as $keyProperties => $nameProperties)
                             <tr>
                                 <td>{{ $nameProperties }}</td>
